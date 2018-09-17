@@ -75,6 +75,8 @@ class Note extends Component {
   }
 
   render() {
+    // a side not eon the double '!!'
+    //   you're converting a value to a boolean, then inverting it, then inverting it again
     return !!this.state.editing ? this.renderForm() : this.renderDisplay();
   }
 }
