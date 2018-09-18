@@ -36,8 +36,11 @@ class Note extends Component {
 
   onRemove() {
     console.log("remove clicked");
-    this.setState({
-      removed: true
+    // this doesnt have to be like this, we have passed in an object in to the setState() before, but it is recommended to calculate the next state based on the previous state like so https://medium.com/@wisecobbler/using-a-function-in-setstate-instead-of-an-object-1f5cfd6e55d1
+    this.setState(function(prevState, props) {
+      return {
+        removed: !prevState.removed
+      };
     });
   }
 
