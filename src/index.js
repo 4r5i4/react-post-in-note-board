@@ -4,6 +4,7 @@ import "./index.css";
 // import App from "./App";
 import registerServiceWorker from "./registerServiceWorker";
 import Note from "./Note";
+import Board from "./Board";
 
-ReactDOM.render(<Note />, document.getElementById("root"));
+ReactDOM.render(<Board />, document.getElementById("root"));
 registerServiceWorker();

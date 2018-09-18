@@ -60,7 +60,7 @@ class Note extends Component {
   renderDisplay() {
     return (
       <div className="note">
-        <p>a note component </p>
+        <p>{this.props.children}</p>
         <span>
           <button id="edit" onClick={this.onEdit}>
             <FaPencilAlt />
@@ -75,7 +75,7 @@ class Note extends Component {
   }
 
   render() {
-    // a side not eon the double '!!'
+    // a side note on the double '!!'
     //   you're converting a value to a boolean, then inverting it, then inverting it again
     return !!this.state.editing ? this.renderForm() : this.renderDisplay();
   }
