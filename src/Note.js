@@ -44,19 +44,29 @@ class Note extends Component {
     });
   }
 
-  onSave() {
-    alert(this._newText.value);
+  // we need to mention 'props' cuz this is coming from the parent component and thats how we pass info down the child cmoponent. Props
+  // to pass up informaiton we use events
+  // and the parent component has its own state
+  // for 'this.props.onChange(<args>), the args are defined in the signature of update(newText, i)
+  onSave(e) {
+    e.preventDefault();
+    // alert(this._newText.value);
+    this.props.onChange(this._newText.value, this.props.index);
+    // setting the editing state to false in order to fire the correct render function, which is renderDisplay() not renderForm() based on the ternary condition on L:97
+    this.setState({
+      editing: false
+    });
   }
 
   // to capture whatever the user puts as input, we use 'ref'
   renderForm() {
     return (
       <div className="note">
-        <form>
+        <form onSubmit={this.onSave}>
           {/* we use 'ref' and we put a callback function...
         'input' is staandard and is from TextAreaElement */}
           <textarea ref={input => (this._newText = input)} />
-          <button onClick={this.onSave}>
+          <button id="save">
             <FaSave />
           </button>
         </form>

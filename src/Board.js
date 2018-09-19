@@ -12,27 +12,39 @@ class Board extends Component {
       board_notes: [
         // we will give it some static notes
         {
-          id: 1,
+          // apparently changing the id makes no difference to the index that gets printed based on console.log() on L:39
+          id: 10,
           content: "Call Alex"
         },
         {
-          id: 2,
+          id: 1,
           content: "Pick up the laundry"
         },
         {
-          id: 3,
+          id: 2,
           content: "Light up the candle to cover the smell of bad chicken"
         },
         {
-          id: 4,
+          id: 3,
           content: "Read one linkedin article that you have posted, everyday!"
         }
       ]
     };
 
     this.placeNotes = this.placeNotes.bind(this);
+    this.update = this.update.bind(this);
   }
 
+  update(newText, i) {
+    console.log("updating item at index ", i, "with content ", newText);
+    // setting the state based on the previous state
+    // the board_notes will be a new array (cuz of the map()), if it's not the right index, return the same note, and if not, return a new note with all of it's keys but a new 'content'
+    this.setState(prevState => ({
+      board_notes: prevState.board_notes.map(
+        note => (note.id !== i ? note : { ...note, content: newText })
+      )
+    }));
+  }
   //   now i need to handle the displaying of these notes
   // we need a function that will go over the array and add those onto the board
   // the tempting thing to do is to pass in the array of notes, but then you will have to figure out how to graphically place those items
@@ -43,7 +55,8 @@ class Board extends Component {
   //   also when removing the 'key' , i got this warning: 'Each child in an array or iterator should have a unique "key" prop.'
   placeNotes(note, id) {
     return (
-      <Note key={id} index={id}>
+      // adding onChange event listener to fire up update(newText, i)
+      <Note key={id} index={id} onChange={this.update}>
         {note.content}
       </Note>
     );
