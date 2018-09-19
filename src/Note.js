@@ -45,13 +45,17 @@ class Note extends Component {
   }
 
   onSave() {
-    window.alert("saved...");
+    alert(this._newText.value);
   }
+
+  // to capture whatever the user puts as input, we use 'ref'
   renderForm() {
     return (
       <div className="note">
         <form>
-          <textarea />
+          {/* we use 'ref' and we put a callback function...
+        'input' is staandard and is from TextAreaElement */}
+          <textarea ref={input => (this._newText = input)} />
           <button onClick={this.onSave}>
             <FaSave />
           </button>
