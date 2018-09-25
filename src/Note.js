@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { FaBeer } from "react-icons/fa";
+// import { FaBeer } from "react-icons/fa";
 import { FaPencilAlt } from "react-icons/fa";
 import { FaTrashAlt } from "react-icons/fa";
 import { FaSave } from "react-icons/fa";
@@ -35,8 +35,9 @@ class Note extends Component {
   }
 
   onRemove() {
-    console.log("remove clicked");
+    // console.log("remove clicked");
     // this doesnt have to be like this, we have passed in an object in to the setState() before, but it is recommended to calculate the next state based on the previous state like so https://medium.com/@wisecobbler/using-a-function-in-setstate-instead-of-an-object-1f5cfd6e55d1
+    this.props.onRemove(this.props.index);
     this.setState(function(prevState, props) {
       return {
         removed: !prevState.removed

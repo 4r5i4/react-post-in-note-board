@@ -13,26 +13,49 @@ class Board extends Component {
         // we will give it some static notes
         {
           // apparently changing the id makes no difference to the index that gets printed based on console.log() on L:39
-          id: 10,
-          content: "Call Alex"
+          //   when adding the remove functionality, it is imperative for the id to start at the right digit, since removing it makes the condition on L:46 false, it doesn't evaluate to true: why cuz the index coming from the DOM is 0 for the first element, and yet we are setting that number to 10.
+          id: 0,
+          content: "index 0"
         },
         {
           id: 1,
-          content: "Pick up the laundry"
+          content: "index 1"
         },
         {
           id: 2,
-          content: "Light up the candle to cover the smell of bad chicken"
+          content: "index 2"
         },
         {
           id: 3,
-          content: "Read one linkedin article that you have posted, everyday!"
+          content: "index 3"
         }
       ]
     };
 
     this.placeNotes = this.placeNotes.bind(this);
     this.update = this.update.bind(this);
+    this.remove = this.remove.bind(this);
+  }
+
+  updateIndex() {
+    var id_reset = 0;
+    this.setState(prevState => ({
+      board_notes: prevState.board_notes.map(note => ({
+        ...note,
+        id: id_reset++
+      }))
+    }));
+  }
+
+  remove(id) {
+    console.log("removing item at index ", id);
+    //   using the Array.splice(), remove the item at index, only 1 element:
+    // splice returns the element that was removed, not the rest of the array.
+    // the correct function is filter()
+    this.setState(prevState => ({
+      board_notes: prevState.board_notes.filter(note => note.id !== id)
+    }));
+    this.updateIndex();
   }
 
   update(newText, i) {
@@ -56,7 +79,7 @@ class Board extends Component {
   placeNotes(note, id) {
     return (
       // adding onChange event listener to fire up update(newText, i)
-      <Note key={id} index={id} onChange={this.update}>
+      <Note key={id} index={id} onChange={this.update} onRemove={this.remove}>
         {note.content}
       </Note>
     );
