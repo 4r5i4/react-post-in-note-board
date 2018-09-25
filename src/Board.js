@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Note from "./Note";
+import { FaPlus } from "react-icons/fa";
 
 // we add a board to hold our notes
 // the board will have its own collection of notes
@@ -11,32 +12,42 @@ class Board extends Component {
       //   collection of notes that the board holds
       board_notes: [
         // we will give it some static notes
-        {
-          // apparently changing the id makes no difference to the index that gets printed based on console.log() on L:39
-          //   when adding the remove functionality, it is imperative for the id to start at the right digit, since removing it makes the condition on L:46 false, it doesn't evaluate to true: why cuz the index coming from the DOM is 0 for the first element, and yet we are setting that number to 10.
-          id: 0,
-          content: "index 0"
-        },
-        {
-          id: 1,
-          content: "index 1"
-        },
-        {
-          id: 2,
-          content: "index 2"
-        },
-        {
-          id: 3,
-          content: "index 3"
-        }
+        // {
+        //   // apparently changing the id makes no difference to the index that gets printed based on console.log() on L:39
+        //   //   when adding the remove functionality, it is imperative for the id to start at the right digit, since removing it makes the condition on L:46 false, it doesn't evaluate to true: why cuz the index coming from the DOM is 0 for the first element, and yet we are setting that number to 10.
+        //   id: 0,
+        //   content: "index 0"
+        // },
+        // {
+        //   id: 1,
+        //   content: "index 1"
+        // },
+        // {
+        //   id: 2,
+        //   content: "index 2"
+        // },
+        // {
+        //   id: 3,
+        //   content: "index 3"
+        // }
       ]
     };
 
     this.placeNotes = this.placeNotes.bind(this);
     this.update = this.update.bind(this);
     this.remove = this.remove.bind(this);
+    this.add = this.add.bind(this);
   }
 
+  /** 
+  // this is a solution I found but since we always have the length for the array, we dont need to use a function!,
+  // I'll try removing the hard coded array elements in the board_notes now!
+  // result: i was right! it wrx
+  nextId() {
+    this.uniqueId = this.uniqueId || 0;
+    return this.uniqueId++;
+  }
+  */
   updateIndex() {
     var id_reset = 0;
     this.setState(prevState => ({
@@ -47,6 +58,8 @@ class Board extends Component {
     }));
   }
 
+  //   the remove functionality
+  // this worked but only for the first item, cuz the items in the DOM would maintain their
   remove(id) {
     console.log("removing item at index ", id);
     //   using the Array.splice(), remove the item at index, only 1 element:
@@ -85,11 +98,28 @@ class Board extends Component {
     );
   }
 
+  add(text) {
+    this.setState(prevState => ({
+      board_notes: [
+        ...prevState.board_notes,
+        {
+          content: text,
+          id: prevState.board_notes.length
+        }
+      ]
+    }));
+  }
+
   render() {
     return (
       <div className="board">
         {/* for every note in the board_notes array, do the placeNotes operation */}
         {this.state.board_notes.map(this.placeNotes)}
+        <div>
+          <button id="add" onClick={this.add.bind(null, "New Note")}>
+            <FaPlus />
+          </button>
+        </div>
       </div>
     );
   }
