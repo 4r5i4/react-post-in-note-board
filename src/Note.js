@@ -66,7 +66,10 @@ class Note extends Component {
         <form onSubmit={this.onSave}>
           {/* we use 'ref' and we put a callback function...
         'input' is staandard and is from TextAreaElement */}
-          <textarea ref={input => (this._newText = input)} />
+          <textarea
+            ref={input => (this._newText = input)}
+            defaultValue={this.props.children}
+          />
           <button id="save">
             <FaSave />
           </button>
