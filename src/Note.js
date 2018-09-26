@@ -25,6 +25,45 @@ class Note extends Component {
     this.onSave = this.onSave.bind(this);
     this.renderForm = this.renderForm.bind(this);
     this.renderDisplay = this.renderDisplay.bind(this);
+    this.randomStyle = this.randomStyle.bind(this);
+  }
+
+  componentWillMount() {
+    this.style = {
+      right: this.randomStyle(0, window.innerWidth - 150, "px"),
+      top: this.randomStyle(0, window.innerHeight - 150, "px"),
+      transform: `rotate(${this.randomStyle(-25, 25, "deg")})`,
+      backgroundColor: this.randomStickyColor()
+    };
+  }
+
+  // we wanna void rendering everytime we click on a Note
+  componentDidUpdate() {
+    if (this.state.editing) {
+      // alert("you changed something");
+      // var text;
+      // text = this._newText;
+      // ** You don't really need a separate variable to do this focusing and selecting!
+      this._newText.focus();
+      this._newText.select();
+      // text.select();
+    }
+  }
+  /**
+   * give a random style to each note, a different position (dynamic based on the window size, not sure if it'll be 'responsive')
+   *
+   */
+  randomStyle(x, y, s) {
+    return x + Math.ceil(Math.random() * (y - x)) + s;
+  }
+
+  /**
+   * customize the color
+   */
+  randomStickyColor() {
+    var color = ["DeepPink", "lime", "yellow", "white"];
+    var index = Math.floor(Math.random() * 4);
+    return color[index];
   }
 
   onEdit() {
@@ -62,7 +101,7 @@ class Note extends Component {
   // to capture whatever the user puts as input, we use 'ref'
   renderForm() {
     return (
-      <div className="note">
+      <div className="note" style={this.style}>
         <form onSubmit={this.onSave}>
           {/* we use 'ref' and we put a callback function...
         'input' is staandard and is from TextAreaElement */}
@@ -80,7 +119,7 @@ class Note extends Component {
 
   renderDisplay() {
     return (
-      <div className="note">
+      <div className="note" style={this.style}>
         <p>{this.props.children}</p>
         <span>
           <button id="edit" onClick={this.onEdit}>

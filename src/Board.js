@@ -60,7 +60,7 @@ class Board extends Component {
 
   componentWillMount() {
     var self = this;
-    alert("component will mount");
+    // alert("component will mount");
     fetch(
       `https://baconipsum.com/api/?type=all-meat&sentences=${this.props.count}`
     )
@@ -71,6 +71,7 @@ class Board extends Component {
           .forEach(sentence => self.add(sentence.substring(0, 20)))
       );
   }
+
   //   the remove functionality
   // this worked but only for the first item, cuz the items in the DOM would maintain their
   remove(id) {
@@ -94,6 +95,7 @@ class Board extends Component {
       )
     }));
   }
+
   //   now i need to handle the displaying of these notes
   // we need a function that will go over the array and add those onto the board
   // the tempting thing to do is to pass in the array of notes, but then you will have to figure out how to graphically place those items
@@ -110,6 +112,12 @@ class Board extends Component {
       </Note>
     );
   }
+
+  // i will try changing the style of the notes here.. watch the bhaviour and check the response time and then I will do the same in the note component and compare
+  // randomStyle(){
+  // ok right here, if I say this, then im referring to the board and I can't access the style for a single Note. So i will have to do this in Note Component.
+  // this.
+  // }
 
   add(text) {
     this.setState(prevState => ({
