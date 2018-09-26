@@ -6,5 +6,5 @@ import registerServiceWorker from "./registerServiceWorker";
 // import Note from "./Note";
 import Board from "./Board";
 
-ReactDOM.render(<Board />, document.getElementById("root"));
+ReactDOM.render(<Board count={50} />, document.getElementById("root"));
 registerServiceWorker();

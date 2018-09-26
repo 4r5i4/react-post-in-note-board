@@ -58,6 +58,19 @@ class Board extends Component {
     }));
   }
 
+  componentWillMount() {
+    var self = this;
+    alert("component will mount");
+    fetch(
+      `https://baconipsum.com/api/?type=all-meat&sentences=${this.props.count}`
+    )
+      .then(response => response.json())
+      .then(jsonResponse =>
+        jsonResponse[0]
+          .split(". ")
+          .forEach(sentence => self.add(sentence.substring(0, 20)))
+      );
+  }
   //   the remove functionality
   // this worked but only for the first item, cuz the items in the DOM would maintain their
   remove(id) {
