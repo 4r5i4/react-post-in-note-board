@@ -37,7 +37,16 @@ class Board extends Component {
     this.update = this.update.bind(this);
     this.remove = this.remove.bind(this);
     this.add = this.add.bind(this);
+
+    // this.updateIndex = this.updateIndex.bind(this);
   }
+
+  /**
+   * Right now there is a problem:
+   * as i delete a note, other's shift accordingly to fit the size of the array and therefore the Notes 'move' their content does, but they don't physically move.
+   * The problem MAY be the updateIndex()
+   * Result: yes, the problem is in fact the updateIndex() that's becuase it doesn't allow each Note to maintain their unique id. Looking into the placeNotes(note, i), if we 'note' in the key and index attributes, this fun issue is fixed.
+   */
 
   /** 
   // this is a solution I found but since we always have the length for the array, we dont need to use a function!,
@@ -82,7 +91,7 @@ class Board extends Component {
     this.setState(prevState => ({
       board_notes: prevState.board_notes.filter(note => note.id !== id)
     }));
-    this.updateIndex();
+    // this.updateIndex();
   }
 
   update(newText, i) {
@@ -107,7 +116,12 @@ class Board extends Component {
   placeNotes(note, id) {
     return (
       // adding onChange event listener to fire up update(newText, i)
-      <Note key={id} index={id} onChange={this.update} onRemove={this.remove}>
+      <Note
+        key={note.id}
+        index={note.id}
+        onChange={this.update}
+        onRemove={this.remove}
+      >
         {note.content}
       </Note>
     );

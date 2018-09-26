@@ -38,6 +38,16 @@ class Note extends Component {
   }
 
   // we wanna void rendering everytime we click on a Note
+  /**
+   * this checks to see if something has been changed
+   * it always takes nextProps, and nextState
+   */
+  shouldComponentUpdate(nextProps, nextState) {
+    return (
+      this.props.children !== nextProps.children || this.state !== nextState
+    );
+  }
+
   componentDidUpdate() {
     if (this.state.editing) {
       // alert("you changed something");
