@@ -1,3 +1,15 @@
+/**
+ * as the final step , we build our application:
+ * npm run build
+ *
+ * we serve it using serve
+ * npm install serve
+ *
+ * to serve a <folder>
+ * serve -s <folder>
+ * in our case, to serve our build: serve -s build
+ */
+
 import React, { Component } from "react";
 import Note from "./Note";
 import { FaPlus } from "react-icons/fa";
